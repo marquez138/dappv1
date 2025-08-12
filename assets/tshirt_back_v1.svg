@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 3103.95 3103.97" xmlns:printify="http://printify.com/adjuster" printify:width="821.2574999999999" printify:height="821.2574999999999">
+  <defs>
+    <image x="0" y="0" width="3103.95" height="3103.97" id="fabric-image"/>
+    <path d="M2383.34,287.65l713.16,541.2-136.72,200.74-199.2,292.47-216.3-89.74M2383.34,287.65,1948.78,126.36l-73.31-22.66c-50.66,44-146.63,118.63-323.07,118.63h-.85c-176.43,0-272.41-74.64-323.06-118.63l-73.32,22.66L720.61,287.65,7.46,828.85l136.72,200.74,199.19,292.47,216.3-89.74v1772.6H2544.28V1232.32" id="fabric-0"/>
+    <clipPath id="fabric-0-clip">
+      <use href="#fabric-0"/>
+    </clipPath>
+    <rect id="_back-path" width="1151.71" height="1535.62" fill="none" stroke-miterlimit="10" transform=""/>
+    <clipPath>
+      <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_back-path"/>
+    </clipPath>
+  </defs>
+  <g id="back">
+    <g id="color_first" fill-rule="nonzero" fill="currentColor">
+      <use href="#fabric-0"/>
+      <use clip-path="url(#fabric-0-clip)" href="#fabric-image"/>
+      <g clip-path="url(#_back-clippath)" transform="translate(975.04 306.97)">
+        <svg id="placeholder_back" width="1151.71" height="1535.62" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1151.71 1535.62">
+          <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_back-path" stroke="#ffffff"/>
+          <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_back-path" stroke="#000000" stroke-dasharray="6.843812499999999mm, 6.843812499999999mm"/>
+        </svg>
+      </g>
+    </g>
+    <g id="outlines">
+      <g id="outlines_colored">
+        <path d="M1912.81,114.29c-26.4,30.6-41.29,43.58-41.29,43.58-51.84,44.37-147.26,114.45-318.22,114.45H1552c-171,0-266.8-70.08-318.64-114.45,0,0-14.89-13-41.3-43.58" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <path d="M1928.55,119.69c-62.65,80-188,170.63-375.67,170.63h-.9c-187.72,0-313-90.65-375.68-170.63" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+        <polyline points="425.47 1284.62 222.82 972.93 83.83 768.89" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="449.07 1275.4 245.49 962.27 105.57 756.98 103.54 753.94" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <path d="M2544.28,1230.32v1772.6H559.67V1230.32l-216.3,89.74L144.18,1027.59,7.46,826.85l713.15-541.2,434.56-161.29,73.32-22.66c50.65,44,146.63,118.63,323.06,118.63h.85c176.44,0,272.41-74.64,323.07-118.63l73.31,22.66,434.56,161.29,713.16,541.2-136.72,200.74-199.2,292.47Z" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="10.96"/>
+        <polyline points="2544.64 2908.99 1552.4 2908.99 1551.55 2908.99 559.32 2908.99" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="2544.64 2930.32 1552.4 2930.32 1551.55 2930.32 559.32 2930.32" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="2678.71 1284.27 2881.13 972.93 3020.04 769.53" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="2654.88 1275.4 2858.47 962.27 3000.04 754.87" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <path d="M720.61,285.65c-18.43-2.5,115.79,578.88-160.94,944.67" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+        <path d="M2382.55,285.65c18.43-2.5-115.79,578.88,160.94,944.67" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+        <path d="M2384.89,306.85,1932.17,139.54c-31.49,38.33-49.23,52.57-70.27,68-56.09,41-146.37,99.47-308.6,99.47h-1.75c-162.22,0-252.5-58.44-308.59-99.47-21-15.34-39.38-29.69-70.66-67.72l.09-.07L719.94,307.35" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

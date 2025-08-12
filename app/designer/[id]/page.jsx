@@ -100,7 +100,7 @@ const DesignerPage = () => {
 
         {/* Main Designer Canvas */}
         <section className='flex-1 flex flex-col items-center justify-center p-4'>
-          <div className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'>
+          <div className='relative w-full max-w-2xl h-auto aspect-square flex items-center justify-center'>
             {templateSrc ? (
               <>
                 <InlineSVG
@@ -247,7 +247,7 @@ const DesignerPage = () => {
           )}
         </aside>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
