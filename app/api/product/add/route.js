@@ -30,43 +30,25 @@ const uploadToCloudinary = async (file) => {
 export async function POST(request) {
   try {
     const { userId } = getAuth(request)
-
-    const isSeller = await authSeller(userId)
-
-    if (!isSeller) {
+    if (!authSeller(userId)) {
       return NextResponse.json({ success: false, message: 'not authorized' })
     }
 
     const formData = await request.formData()
-
     const name = formData.get('name')
     const description = formData.get('description')
     const category = formData.get('category')
     const price = formData.get('price')
     const offerPrice = formData.get('offerPrice')
+    const designTemplates = JSON.parse(formData.get('designTemplates'))
 
     const files = formData.getAll('images')
-
     if (!files || files.length === 0) {
       return NextResponse.json({ success: false, message: 'no files uploaded' })
     }
 
     const result = await Promise.all(files.map(uploadToCloudinary))
     const image = result.map((result) => result.secure_url)
-
-    // Handle design template uploads
-    const designTemplates = {}
-    const templateKeys = ['front', 'back', 'sleeveRight', 'sleeveLeft']
-
-    for (const key of templateKeys) {
-      if (formData.has(key)) {
-        const file = formData.get(key)
-        if (file && file.size > 0) {
-          const result = await uploadToCloudinary(file)
-          designTemplates[key] = result.secure_url
-        }
-      }
-    }
 
     await connectDB()
     const newProduct = await Product.create({

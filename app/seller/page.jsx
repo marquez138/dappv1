@@ -15,10 +15,15 @@ const AddProduct = () => {
   const [category, setCategory] = useState('Earphone')
   const [price, setPrice] = useState('')
   const [offerPrice, setOfferPrice] = useState('')
-  const [designTemplates, setDesignTemplates] = useState({})
+  const [designTemplates, setDesignTemplates] = useState({
+    front: '',
+    back: '',
+    sleeveRight: '',
+    sleeveLeft: '',
+  })
 
   const handleTemplateChange = (e, key) => {
-    setDesignTemplates((prev) => ({ ...prev, [key]: e.target.files[0] }))
+    setDesignTemplates((prev) => ({ ...prev, [key]: e.target.value }))
   }
 
   const handleSubmit = async (e) => {
@@ -36,11 +41,8 @@ const AddProduct = () => {
       formData.append('images', files[i])
     }
 
-    for (const key in designTemplates) {
-      if (designTemplates[key]) {
-        formData.append(key, designTemplates[key])
-      }
-    }
+    // Append design templates as a JSON string
+    formData.append('designTemplates', JSON.stringify(designTemplates))
 
     try {
       const token = await getToken()
@@ -67,6 +69,8 @@ const AddProduct = () => {
       toast.error(error.message)
     }
   }
+
+  const templateOptions = Object.keys(assets.designTemplates)
 
   return (
     <div className='flex-1 min-h-screen flex flex-col justify-between'>
@@ -109,55 +113,75 @@ const AddProduct = () => {
 
         {/* Design Templates Section */}
         <div>
-          <p className='text-base font-medium'>Design Templates (SVG only)</p>
+          <p className='text-base font-medium'>Design Templates</p>
           <div className='grid grid-cols-2 gap-4 mt-2'>
             <div>
               <label htmlFor='front-template' className='text-sm'>
                 Front Side
               </label>
-              <input
-                type='file'
+              <select
                 id='front-template'
-                accept='.svg'
                 onChange={(e) => handleTemplateChange(e, 'front')}
-                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
-              />
+                className='block w-full text-sm text-gray-500 p-2 border rounded'
+              >
+                <option value=''>None</option>
+                {templateOptions.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor='back-template' className='text-sm'>
                 Back Side
               </label>
-              <input
-                type='file'
+              <select
                 id='back-template'
-                accept='.svg'
                 onChange={(e) => handleTemplateChange(e, 'back')}
-                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
-              />
+                className='block w-full text-sm text-gray-500 p-2 border rounded'
+              >
+                <option value=''>None</option>
+                {templateOptions.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor='sleeveRight-template' className='text-sm'>
                 Sleeve Right
               </label>
-              <input
-                type='file'
+              <select
                 id='sleeveRight-template'
-                accept='.svg'
                 onChange={(e) => handleTemplateChange(e, 'sleeveRight')}
-                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
-              />
+                className='block w-full text-sm text-gray-500 p-2 border rounded'
+              >
+                <option value=''>None</option>
+                {templateOptions.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor='sleeveLeft-template' className='text-sm'>
                 Sleeve Left
               </label>
-              <input
-                type='file'
+              <select
                 id='sleeveLeft-template'
-                accept='.svg'
                 onChange={(e) => handleTemplateChange(e, 'sleeveLeft')}
-                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
-              />
+                className='block w-full text-sm text-gray-500 p-2 border rounded'
+              >
+                <option value=''>None</option>
+                {templateOptions.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -242,6 +266,7 @@ const AddProduct = () => {
             />
           </div>
         </div>
+
         <button
           type='submit'
           className='px-8 py-2.5 bg-orange-600 text-white font-medium rounded'
@@ -249,7 +274,6 @@ const AddProduct = () => {
           ADD
         </button>
       </form>
-      {/* <Footer /> */}
     </div>
   )
 }

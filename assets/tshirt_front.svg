@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:printify="http://printify.com/adjuster" width="100%" height="100%" viewBox="0 0 3103.96 3103.97" printify:width="821.2574999999999" printify:height="821.2574999999999"><defs><image x="0" y="0" width="3103.96" height="3103.97" id="fabric-image" href="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/><path d="M2541.62,1225v1772.6H557V1225l-216.3,89.74-199.2-292.47L4.79,821.52,718,280.32,1152.51,119l73.31-22.67c50.65,44,146.63,118.64,323.06,118.64h.86c176.43,0,272.41-74.65,323.06-118.64L1946.12,119l434.56,161.29,713.15,541.2-136.72,200.74-199.19,292.47L2541.62,1225" id="fabric-0"/><clipPath id="fabric-0-clip"><use href="#fabric-0"/></clipPath><rect id="_front-path" width="1151.71" height="1535.62" fill="none" stroke-miterlimit="10" transform=""/><clipPath><use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path"/></clipPath></defs>
+  <g id="front">
+    <g id="color_first" fill-rule="nonzero" fill="#fff"><use href="#fabric-0"/><use clip-path="url(#fabric-0-clip)" href="#fabric-image"/>
+      
+      
+    <g clip-path="url(#_front-clippath)" transform="matrix(1 -4.89859e-16 4.89859e-16 1 976.76 544.25)"><svg id="placeholder_front" width="1151.7099609375" height="1535.6199951171875" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1151.7099609375 1535.6199951171875" visibility="hidden"><use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path" stroke="#ffffff"/><use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path" stroke="#000000" stroke-dasharray="6.843812499999999mm, 6.843812499999999mm"/></svg></g></g>
+    <g id="outlines">
+      <path d="M1876.8,102c-50.65,44-146.63,118.64-323.06,118.64h-.86c-176.43,0-272.41-74.65-323.06-118.64m0,0c0,204.09,151.39,374.57,323.06,374.57h.86c171.67,0,323.06-170.48,323.06-374.57" opacity="0.2"/>
+      <g id="outlines_colored">
+        <path d="M1870.62,167.2C1818.78,211.57,1723.36,279,1552.41,279h-.86c-171,0-266.37-67.42-318.21-111.79" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <path d="M1861,195.51c-53.5,44.36-146.37,106.14-308.59,106.14h-.86c-162.22,0-255.1-61.78-308.59-106.14" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="425.47 1284.62 222.82 972.93 83.83 768.89" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="449.08 1275.4 245.49 962.27 105.57 756.98 103.54 753.94" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <path d="M1948.78,124.36c0,233.56-177.55,419.89-396.37,419.89h-.86c-218.83,0-396.38-186.33-396.38-419.89" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+        <path d="M1228.49,101.7c0,204.09,151.39,374.57,323.06,374.57h.86c171.67,0,323.06-170.48,323.06-374.57" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+        <path d="M2544.16,1231.41l.12,1771.51H559.67V1230.32l-216.3,89.74L144.18,1027.59,7.46,826.85l713.15-541.2,434.56-161.29,73.32-22.66c50.65,44,146.63,118.63,323.06,118.63h.86c176.43,0,272.41-74.64,323.06-118.63l73.31,22.66,434.08,161.29,713.64,541.2-136.72,200.74-199.2,292.47-216.3-89.74Z" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="10.96"/>
+        <path d="M1870.62,156.53C1818.78,200.9,1723.36,271,1552.41,271h-.86c-171,0-266.37-70.09-318.21-114.46" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="3.28"/>
+        <path d="M1861,206.18c-53.5,44.36-146.37,103.46-308.59,103.46h-.86c-162.22,0-255.1-59.1-308.59-103.46" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="3.28"/>
+        <polyline points="2544.64 2908.99 1552.4 2908.99 1551.55 2908.99 559.32 2908.99" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="2544.64 2930.32 1552.4 2930.32 1551.55 2930.32 559.32 2930.32" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="2678.71 1284.27 2881.13 972.93 3020.04 769.53" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <polyline points="2654.88 1275.4 2858.47 962.27 3000.04 754.87" fill="none" stroke="#272223" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19" stroke-dasharray="13.33 6.67" opacity="0.5"/>
+        <path d="M720.61,285.65c-18.43-2.5,115.79,578.88-160.94,944.67" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+        <path d="M2382.55,285.65c18.43-2.5-115.79,578.88,160.94,944.67" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="5.48"/>
+      </g>
+    </g>
+  </g>
+</svg>

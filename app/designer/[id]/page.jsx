@@ -2,9 +2,11 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { useAppContext } from '@/context/AppContext'
+import { assets } from '@/assets/assets'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Loading from '@/components/Loading'
+import Image from 'next/image'
 
 const DesignerPage = () => {
   const { id } = useParams()
@@ -31,7 +33,9 @@ const DesignerPage = () => {
     return <Loading />
   }
 
-  const availableViews = Object.keys(product.designTemplates || {})
+  const availableViews = Object.keys(product.designTemplates || {}).filter(
+    (key) => product.designTemplates[key]
+  )
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -72,8 +76,10 @@ const DesignerPage = () => {
           <div className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'>
             {product.designTemplates && product.designTemplates[activeView] ? (
               <>
-                <img
-                  src={product.designTemplates[activeView]}
+                <Image
+                  src={
+                    assets.designTemplates[product.designTemplates[activeView]]
+                  }
                   alt={`${activeView} view`}
                   className='max-w-full max-h-full'
                 />
