@@ -29,7 +29,6 @@ const DesignerPage = () => {
     }
   }, [id, products])
 
-  // Recalculate bounds when the active view changes or the component mounts
   useEffect(() => {
     const calculateBounds = () => {
       if (canvasRef.current) {
@@ -37,25 +36,22 @@ const DesignerPage = () => {
         const printAreaNode = canvasRef.current.querySelector('#print-area')
 
         if (svgNode && printAreaNode) {
-          const svgViewBox = svgNode.viewBox.baseVal
           const canvasRect = canvasRef.current.getBoundingClientRect()
+          const svgViewBox = svgNode.viewBox.baseVal
 
           const scaleX = canvasRect.width / svgViewBox.width
-          const scaleY = canvasRect.height / svgViewBox.height
 
           setBounds({
             width: printAreaNode.width.baseVal.value * scaleX,
-            height: printAreaNode.height.baseVal.value * scaleY,
+            height: printAreaNode.height.baseVal.value * scaleX,
             x: printAreaNode.x.baseVal.value * scaleX,
-            y: printAreaNode.y.baseVal.value * scaleY,
+            y: printAreaNode.y.baseVal.value * scaleX,
           })
         }
       }
     }
 
-    // Delay calculation to ensure SVG is rendered
     const timeoutId = setTimeout(calculateBounds, 100)
-
     window.addEventListener('resize', calculateBounds)
 
     return () => {
@@ -71,10 +67,10 @@ const DesignerPage = () => {
         ...prev,
         [activeView]: {
           image: URL.createObjectURL(file),
-          width: bounds.width * 0.8, // Start smaller
-          height: bounds.height * 0.8,
-          x: bounds.x + bounds.width * 0.1, // Center it
-          y: bounds.y + bounds.height * 0.1,
+          width: bounds.width * 0.8,
+          height: 'auto',
+          x: bounds.width * 0.1, // Position relative to the bounds container
+          y: bounds.height * 0.1,
           rotation: 0,
         },
       }))
@@ -130,7 +126,6 @@ const DesignerPage = () => {
             className='hidden'
           />
         </aside>
-
         <section className='flex-1 flex flex-col items-center justify-center p-4'>
           <div
             ref={canvasRef}
@@ -145,32 +140,46 @@ const DesignerPage = () => {
                 />
               </div>
             )}
-            {currentDesign && bounds && (
-              <Rnd
-                size={{
-                  width: currentDesign.width,
-                  height: currentDesign.height,
-                }}
-                position={{ x: currentDesign.x, y: currentDesign.y }}
-                onDragStop={(e, d) =>
-                  updateDesign(activeView, { x: d.x, y: d.y })
-                }
-                onResizeStop={(e, direction, ref, delta, position) => {
-                  updateDesign(activeView, {
-                    width: parseFloat(ref.style.width),
-                    height: parseFloat(ref.style.height),
-                    ...position,
-                  })
-                }}
+            {/* This is the new container that acts as the boundary */}
+            {bounds && (
+              <div
+                className='absolute'
                 style={{
-                  backgroundImage: `url(${currentDesign.image})`,
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  transform: `rotate(${currentDesign.rotation}deg)`,
+                  left: `${bounds.x}px`,
+                  top: `${bounds.y}px`,
+                  width: `${bounds.width}px`,
+                  height: `${bounds.height}px`,
                 }}
-                bounds='parent'
-                lockAspectRatio={true}
-              />
+              >
+                {currentDesign && (
+                  <Rnd
+                    size={{
+                      width: currentDesign.width,
+                      height: currentDesign.height,
+                    }}
+                    position={{ x: currentDesign.x, y: currentDesign.y }}
+                    onDragStop={(e, d) =>
+                      updateDesign(activeView, { x: d.x, y: d.y })
+                    }
+                    onResizeStop={(e, direction, ref, delta, position) => {
+                      updateDesign(activeView, {
+                        width: parseFloat(ref.style.width),
+                        height: parseFloat(ref.style.height),
+                        ...position,
+                      })
+                    }}
+                    style={{
+                      backgroundImage: `url(${currentDesign.image})`,
+                      backgroundSize: 'contain',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center',
+                      transform: `rotate(${currentDesign.rotation}deg)`,
+                    }}
+                    bounds='parent' // Now correctly bounds to the new container
+                    lockAspectRatio={true}
+                  />
+                )}
+              </div>
             )}
           </div>
           <div className='mt-4 flex items-center justify-center gap-2 p-1 bg-gray-200 rounded-full'>
@@ -191,7 +200,6 @@ const DesignerPage = () => {
             ))}
           </div>
         </section>
-
         <aside className='w-full md:w-64 bg-white p-4 border-t md:border-l'>
           <h2 className='font-semibold'>{product.name}</h2>
           <p className='text-sm text-gray-500'>Custom Design</p>
