@@ -1,26 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:printify="http://printify.com/adjuster" width="100%" height="100%" viewBox="0 0 3103.96 3103.97" printify:width="821.2574999999999" printify:height="821.2574999999999">
-  <defs>
-    <image x="0" y="0" width="3103.96" height="3103.97" id="fabric-image" href="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-    <path d="M2541.62,1225v1772.6H557V1225l-216.3,89.74-199.2-292.47L4.79,821.52,718,280.32,1152.51,119l73.31-22.67c50.65,44,146.63,118.64,323.06,118.64h.86c176.43,0,272.41-74.65,323.06-118.64L1946.12,119l434.56,161.29,713.15,541.2-136.72,200.74-199.19,292.47L2541.62,1225" id="fabric-0"/>
-    <clipPath id="fabric-0-clip">
-      <use href="#fabric-0"/>
-    </clipPath>
-    <rect id="_front-path" width="1151.71" height="1535.62" fill="none" stroke-miterlimit="10" transform=""/>
-    <clipPath>
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path"/>
-    </clipPath>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:printify="http://printify.com/adjuster" width="100%" height="100%" viewBox="0 0 3103.96 3103.97" printify:width="821.2574999999999" printify:height="821.2574999999999"><defs><image x="0" y="0" width="3103.96" height="3103.97" id="fabric-image" href="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/><path d="M2541.62,1225v1772.6H557V1225l-216.3,89.74-199.2-292.47L4.79,821.52,718,280.32,1152.51,119l73.31-22.67c50.65,44,146.63,118.64,323.06,118.64h.86c176.43,0,272.41-74.65,323.06-118.64L1946.12,119l434.56,161.29,713.15,541.2-136.72,200.74-199.19,292.47L2541.62,1225" id="fabric-0"/><clipPath id="fabric-0-clip"><use href="#fabric-0"/></clipPath><rect id="_front-path" width="1151.71" height="1535.62" fill="none" stroke-miterlimit="10" transform=""/><clipPath><use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path"/></clipPath></defs>
   <g id="front">
-    <g id="color_first" fill-rule="nonzero" fill="currentColor">
-      <use href="#fabric-0"/>
-      <use clip-path="url(#fabric-0-clip)" href="#fabric-image"/>
-  <g clip-path="url(#_front-clippath)" transform="translate(975.04 600.97)">
-        <svg id="placeholder_back" width="1151.71" height="1535.62" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1151.71 1535.62">
-          <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_front-path" stroke="#ffffff"/>
-          <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_front-path" stroke="#000000" stroke-dasharray="6.843812499999999mm, 6.843812499999999mm"/>
-        </svg>
-      </g>
-    </g>
+    <g id="color_first" fill-rule="nonzero" fill="currentColor"><use href="#fabric-0"/><use clip-path="url(#fabric-0-clip)" href="#fabric-image"/>
+      
+      
+    <g clip-path="url(#_front-clippath)" transform="matrix(1 -4.89859e-16 4.89859e-16 1 976.76 544.25)"><svg id="placeholder_front" width="1151.7099609375" height="1535.6199951171875" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1151.7099609375 1535.6199951171875" visibility="hidden"><use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path" stroke="#ffffff"/><use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path" stroke="#000000" stroke-dasharray="6.843812499999999mm, 6.843812499999999mm"/></svg></g></g>
     <g id="outlines">
       <path d="M1876.8,102c-50.65,44-146.63,118.64-323.06,118.64h-.86c-176.43,0-272.41-74.65-323.06-118.64m0,0c0,204.09,151.39,374.57,323.06,374.57h.86c171.67,0,323.06-170.48,323.06-374.57" opacity="0.2"/>
       <g id="outlines_colored">
