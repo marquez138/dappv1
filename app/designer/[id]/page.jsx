@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react' // Added useRef
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import { useAppContext } from '@/context/AppContext'
 import { assets } from '@/assets/assets'
@@ -29,37 +29,52 @@ const DesignerPage = () => {
     }
   }, [id, products])
 
-  // New useEffect to calculate the bounds of the print area
+  // Recalculate bounds when the active view changes or the component mounts
   useEffect(() => {
-    if (product && canvasRef.current) {
-      const svgElement = canvasRef.current.querySelector('svg')
-      const printAreaElement = canvasRef.current.querySelector('#print-area')
+    const calculateBounds = () => {
+      if (canvasRef.current) {
+        const svgNode = canvasRef.current.querySelector('svg')
+        const printAreaNode = canvasRef.current.querySelector('#print-area')
 
-      if (svgElement && printAreaElement) {
-        const svgRect = svgElement.getBoundingClientRect()
-        const printAreaRect = printAreaElement.getBoundingClientRect()
+        if (svgNode && printAreaNode) {
+          const svgViewBox = svgNode.viewBox.baseVal
+          const canvasRect = canvasRef.current.getBoundingClientRect()
 
-        setBounds({
-          left: printAreaRect.left - svgRect.left,
-          top: printAreaRect.top - svgRect.top,
-          right: svgRect.right - printAreaRect.right,
-          bottom: svgRect.bottom - printAreaRect.bottom,
-        })
+          const scaleX = canvasRect.width / svgViewBox.width
+          const scaleY = canvasRect.height / svgViewBox.height
+
+          setBounds({
+            width: printAreaNode.width.baseVal.value * scaleX,
+            height: printAreaNode.height.baseVal.value * scaleY,
+            x: printAreaNode.x.baseVal.value * scaleX,
+            y: printAreaNode.y.baseVal.value * scaleY,
+          })
+        }
       }
     }
-  }, [product, activeView, currentColor]) // Recalculate if the view or color changes
+
+    // Delay calculation to ensure SVG is rendered
+    const timeoutId = setTimeout(calculateBounds, 100)
+
+    window.addEventListener('resize', calculateBounds)
+
+    return () => {
+      clearTimeout(timeoutId)
+      window.removeEventListener('resize', calculateBounds)
+    }
+  }, [activeView, product])
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
-    if (file) {
+    if (file && bounds) {
       setDesigns((prev) => ({
         ...prev,
         [activeView]: {
           image: URL.createObjectURL(file),
-          width: 200,
-          height: 200,
-          x: 50,
-          y: 50,
+          width: bounds.width * 0.8, // Start smaller
+          height: bounds.height * 0.8,
+          x: bounds.x + bounds.width * 0.1, // Center it
+          y: bounds.y + bounds.height * 0.1,
           rotation: 0,
         },
       }))
@@ -78,10 +93,10 @@ const DesignerPage = () => {
   const availableViews = Object.keys(product.designTemplates || {}).filter(
     (key) => product.designTemplates[key]
   )
+  const currentDesign = designs[activeView]
   const templateSrc = product.designTemplates[activeView]
     ? assets.designTemplates[product.designTemplates[activeView]].src
     : ''
-  const currentDesign = designs[activeView]
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -119,10 +134,10 @@ const DesignerPage = () => {
         <section className='flex-1 flex flex-col items-center justify-center p-4'>
           <div
             ref={canvasRef}
-            className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'
+            className='relative w-full max-w-lg h-auto aspect-square'
           >
             {templateSrc && (
-              <div className='absolute inset-0 flex items-center justify-center'>
+              <div className='absolute inset-0'>
                 <InlineSVG
                   src={templateSrc}
                   color={currentColor}
@@ -132,26 +147,30 @@ const DesignerPage = () => {
             )}
             {currentDesign && bounds && (
               <Rnd
-                // ... (size and position)
+                size={{
+                  width: currentDesign.width,
+                  height: currentDesign.height,
+                }}
+                position={{ x: currentDesign.x, y: currentDesign.y }}
                 onDragStop={(e, d) =>
                   updateDesign(activeView, { x: d.x, y: d.y })
                 }
                 onResizeStop={(e, direction, ref, delta, position) => {
                   updateDesign(activeView, {
-                    width: ref.style.width,
-                    height: ref.style.height,
+                    width: parseFloat(ref.style.width),
+                    height: parseFloat(ref.style.height),
                     ...position,
                   })
                 }}
-                bounds={canvasRef.current} // Use the parent as a boundary
-                style={{ transform: `rotate(${currentDesign.rotation}deg)` }}
-              >
-                <img
-                  src={currentDesign.image}
-                  alt='Uploaded Design'
-                  className='w-full h-full object-contain'
-                />
-              </Rnd>
+                style={{
+                  backgroundImage: `url(${currentDesign.image})`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  transform: `rotate(${currentDesign.rotation}deg)`,
+                }}
+                bounds='parent'
+                lockAspectRatio={true}
+              />
             )}
           </div>
           <div className='mt-4 flex items-center justify-center gap-2 p-1 bg-gray-200 rounded-full'>
