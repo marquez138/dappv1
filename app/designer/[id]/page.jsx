@@ -6,8 +6,8 @@ import { assets } from '@/assets/assets'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Loading from '@/components/Loading'
-import Image from 'next/image'
-import InlineSVG from '@/components/InlineSVG' // Import the new component
+import InlineSVG from '@/components/InlineSVG'
+import { Rnd } from 'react-rnd'
 
 const DesignerPage = () => {
   const { id } = useParams()
@@ -30,31 +30,28 @@ const DesignerPage = () => {
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
     if (file) {
-      const newDesigns = {
-        ...designs,
+      setDesigns((prev) => ({
+        ...prev,
         [activeView]: {
           image: URL.createObjectURL(file),
-          x: 0,
-          y: 0,
-          scale: 1,
+          width: 200,
+          height: 200,
+          x: 50,
+          y: 50,
           rotation: 0,
         },
-      }
-      setDesigns(newDesigns)
+      }))
     }
   }
 
-  const updateDesign = (property, value) => {
-    if (designs[activeView]) {
-      const newDesigns = { ...designs }
-      newDesigns[activeView][property] += value
-      setDesigns(newDesigns)
-    }
+  const updateDesign = (view, data) => {
+    setDesigns((prev) => ({
+      ...prev,
+      [view]: { ...prev[view], ...data },
+    }))
   }
 
-  if (!product) {
-    return <Loading />
-  }
+  if (!product) return <Loading />
 
   const availableViews = Object.keys(product.designTemplates || {}).filter(
     (key) => product.designTemplates[key]
@@ -68,7 +65,6 @@ const DesignerPage = () => {
     <div className='flex flex-col min-h-screen'>
       <Navbar />
       <main className='flex-grow flex flex-col md:flex-row bg-gray-100'>
-        {/* Left Toolbar */}
         <aside className='w-full md:w-20 bg-white p-4 flex md:flex-col items-center gap-4 border-b md:border-r'>
           <label
             htmlFor='upload-input'
@@ -98,36 +94,45 @@ const DesignerPage = () => {
           />
         </aside>
 
-        {/* Main Designer Canvas */}
         <section className='flex-1 flex flex-col items-center justify-center p-4'>
-          <div className='relative w-full max-w-2xl h-auto aspect-square flex items-center justify-center'>
-            {templateSrc ? (
-              <>
+          <div className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'>
+            {templateSrc && (
+              <div className='absolute inset-0 flex items-center justify-center'>
                 <InlineSVG
                   src={templateSrc}
                   color={currentColor}
                   className='w-full h-full'
                 />
-                {currentDesign && (
-                  <div
-                    className='absolute top-1/2 left-1/2 w-1/2 h-1/2 flex items-center justify-center'
-                    style={{
-                      transform: `translate(-50%, -50%) translate(${currentDesign.x}px, ${currentDesign.y}px) scale(${currentDesign.scale}) rotate(${currentDesign.rotation}deg)`,
-                    }}
-                  >
-                    <img
-                      src={currentDesign.image}
-                      alt='Uploaded Design'
-                      className='max-w-full max-h-full object-contain'
-                    />
-                  </div>
-                )}
-              </>
-            ) : (
-              <p>Design template not available for this view.</p>
+              </div>
+            )}
+            {currentDesign && (
+              <Rnd
+                size={{
+                  width: currentDesign.width,
+                  height: currentDesign.height,
+                }}
+                position={{ x: currentDesign.x, y: currentDesign.y }}
+                onDragStop={(e, d) =>
+                  updateDesign(activeView, { x: d.x, y: d.y })
+                }
+                onResizeStop={(e, direction, ref, delta, position) => {
+                  updateDesign(activeView, {
+                    width: ref.style.width,
+                    height: ref.style.height,
+                    ...position,
+                  })
+                }}
+                style={{ transform: `rotate(${currentDesign.rotation}deg)` }}
+                bounds='parent'
+              >
+                <img
+                  src={currentDesign.image}
+                  alt='Uploaded Design'
+                  className='w-full h-full object-contain'
+                />
+              </Rnd>
             )}
           </div>
-          {/* View Selection */}
           <div className='mt-4 flex items-center justify-center gap-2 p-1 bg-gray-200 rounded-full'>
             {availableViews.map((view) => (
               <button
@@ -147,12 +152,9 @@ const DesignerPage = () => {
           </div>
         </section>
 
-        {/* Right Panel */}
         <aside className='w-full md:w-64 bg-white p-4 border-t md:border-l'>
           <h2 className='font-semibold'>{product.name}</h2>
           <p className='text-sm text-gray-500'>Custom Design</p>
-
-          {/* Color Swatches */}
           <div className='mt-4'>
             <h3 className='text-sm font-medium'>
               Color:{' '}
@@ -172,82 +174,33 @@ const DesignerPage = () => {
                       : 'border-gray-200'
                   }`}
                   style={{ backgroundColor: color.hex }}
-                  aria-label={color.name}
                 />
               ))}
             </div>
           </div>
-
           {currentDesign && (
-            <div className='mt-4 space-y-4'>
-              <div>
-                <label className='text-sm font-medium'>Move</label>
-                <div className='grid grid-cols-2 gap-2 mt-1'>
-                  <button
-                    onClick={() => updateDesign('y', -5)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    Up
-                  </button>
-                  <button
-                    onClick={() => updateDesign('y', 5)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    Down
-                  </button>
-                  <button
-                    onClick={() => updateDesign('x', -5)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    Left
-                  </button>
-                  <button
-                    onClick={() => updateDesign('x', 5)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    Right
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className='text-sm font-medium'>Scale</label>
-                <div className='grid grid-cols-2 gap-2 mt-1'>
-                  <button
-                    onClick={() => updateDesign('scale', 0.1)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => updateDesign('scale', -0.1)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    -
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className='text-sm font-medium'>Rotate</label>
-                <div className='grid grid-cols-2 gap-2 mt-1'>
-                  <button
-                    onClick={() => updateDesign('rotation', 5)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    ⟳
-                  </button>
-                  <button
-                    onClick={() => updateDesign('rotation', -5)}
-                    className='p-2 bg-gray-200 rounded'
-                  >
-                    ⟲
-                  </button>
-                </div>
+            <div className='mt-4'>
+              <label className='text-sm font-medium'>Rotate</label>
+              <div className='flex items-center gap-2 mt-1'>
+                <input
+                  type='range'
+                  min='-180'
+                  max='180'
+                  value={currentDesign.rotation}
+                  onChange={(e) =>
+                    updateDesign(activeView, {
+                      rotation: parseInt(e.target.value),
+                    })
+                  }
+                  className='w-full'
+                />
+                <span>{currentDesign.rotation}°</span>
               </div>
             </div>
           )}
         </aside>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }
