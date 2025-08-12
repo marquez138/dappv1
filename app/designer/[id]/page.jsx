@@ -16,6 +16,8 @@ const DesignerPage = () => {
   const [activeView, setActiveView] = useState('front')
   const [designs, setDesigns] = useState({})
   const [currentColor, setCurrentColor] = useState(null)
+  const [bounds, setBounds] = useState(null)
+  const canvasRef = useRef(null)
 
   useEffect(() => {
     if (products.length > 0) {
@@ -26,6 +28,26 @@ const DesignerPage = () => {
       }
     }
   }, [id, products])
+
+  // New useEffect to calculate the bounds of the print area
+  useEffect(() => {
+    if (product && canvasRef.current) {
+      const svgElement = canvasRef.current.querySelector('svg')
+      const printAreaElement = canvasRef.current.querySelector('#print-area')
+
+      if (svgElement && printAreaElement) {
+        const svgRect = svgElement.getBoundingClientRect()
+        const printAreaRect = printAreaElement.getBoundingClientRect()
+
+        setBounds({
+          left: printAreaRect.left - svgRect.left,
+          top: printAreaRect.top - svgRect.top,
+          right: svgRect.right - printAreaRect.right,
+          bottom: svgRect.bottom - printAreaRect.bottom,
+        })
+      }
+    }
+  }, [product, activeView, currentColor]) // Recalculate if the view or color changes
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
@@ -56,10 +78,10 @@ const DesignerPage = () => {
   const availableViews = Object.keys(product.designTemplates || {}).filter(
     (key) => product.designTemplates[key]
   )
-  const currentDesign = designs[activeView]
   const templateSrc = product.designTemplates[activeView]
     ? assets.designTemplates[product.designTemplates[activeView]].src
     : ''
+  const currentDesign = designs[activeView]
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -95,7 +117,10 @@ const DesignerPage = () => {
         </aside>
 
         <section className='flex-1 flex flex-col items-center justify-center p-4'>
-          <div className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'>
+          <div
+            ref={canvasRef}
+            className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'
+          >
             {templateSrc && (
               <div className='absolute inset-0 flex items-center justify-center'>
                 <InlineSVG
@@ -105,13 +130,9 @@ const DesignerPage = () => {
                 />
               </div>
             )}
-            {currentDesign && (
+            {currentDesign && bounds && (
               <Rnd
-                size={{
-                  width: currentDesign.width,
-                  height: currentDesign.height,
-                }}
-                position={{ x: currentDesign.x, y: currentDesign.y }}
+                // ... (size and position)
                 onDragStop={(e, d) =>
                   updateDesign(activeView, { x: d.x, y: d.y })
                 }
@@ -122,8 +143,8 @@ const DesignerPage = () => {
                     ...position,
                   })
                 }}
+                bounds={canvasRef.current} // Use the parent as a boundary
                 style={{ transform: `rotate(${currentDesign.rotation}deg)` }}
-                bounds='parent'
               >
                 <img
                   src={currentDesign.image}
