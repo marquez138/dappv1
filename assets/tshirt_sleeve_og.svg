@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="left sleeve" width="100%" height="100%" viewBox="0 0 1487.05 1487.06" xmlns:printify="http://printify.com/adjuster"  printify:width="393.45000000000005" printify:height="393.45000000000005"><defs><image x="0" y="0" width="1487.05" height="1487.06" id="fabric-image"/><path d="m743.53,1233.46H82.28S5.84,817.81,5.84,817.81c0,0,95.18-120.91,147.47-184.53,188.21-228.93,221.37-380.66,590.22-380.66h0c368.85,0,402.01,151.73,590.22,380.66,52.3,63.61,147.47,184.53,147.47,184.53l-76.44,415.64h-661.25" id="fabric-0"/><clipPath id="fabric-0-clip"><use href="#fabric-0"/></clipPath><rect id="_left_ccw-path" width="453.43" height="453.43" fill="none" stroke-miterlimit="10" transform=""/><clipPath><use stroke-width="1.6393750000000002mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_left_ccw-path"/></clipPath></defs>
+  <g id="color_first" fill-rule="nonzero" fill="#fff"><use href="#fabric-0"/><use clip-path="url(#fabric-0-clip)" href="#fabric-image"/>
+    
+    
+  <g clip-path="url(#_left_ccw-clippath)" transform="translate(513.78 675.11)"><svg id="placeholder_left_ccw" width="453.43" height="453.43" preserveAspectRatio="xMidYMid slice" viewBox="0 0 453.43 453.43"><use stroke-width="1.6393750000000002mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_left_ccw-path" stroke="#ffffff"/><use stroke-width="1.6393750000000002mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_left_ccw-path" stroke="#000000" stroke-dasharray="3.2787500000000005mm, 3.2787500000000005mm"/></svg></g></g>
+  <g id="outlines">
+    <g id="outlines_colored">
+      <path d="m743.53,1233.46H82.28S5.84,817.81,5.84,817.81c0,0,95.18-120.91,147.47-184.53,188.21-228.93,221.37-380.66,590.22-380.66h0c368.85,0,402.01,151.73,590.22,380.66,52.3,63.61,147.47,184.53,147.47,184.53l-76.44,415.64h-661.25" fill="none" stroke="#272223" stroke-miterlimit="10" stroke-width="10.96"/>
+      <line x1="68.38" y1="1157.89" x2="1418.68" y2="1157.89" fill="none" opacity=".5" stroke="#272223" stroke-dasharray="0 0 13.33 6.66" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19"/>
+      <line x1="64.21" y1="1135.21" x2="1422.85" y2="1135.21" fill="none" opacity=".5" stroke="#272223" stroke-dasharray="0 0 13.33 6.66" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.19"/>
+    </g>
+  </g>
+</svg>
