@@ -5,7 +5,7 @@
     <clipPath id="fabric-0-clip">
       <use href="#fabric-0"/>
     </clipPath>
-    <rect id="_front-path" width="1151.71" height="1535.62" fill="none" stroke-miterlimit="10" transform=""/>
+    <rect id="_front-path" width="1200.71" height="1535.62" fill="none" stroke-miterlimit="10" transform=""/>
     <clipPath>
       <use xmlns:xlink="http://www.w3.org/1999/xlink" stroke-width="3.4219062499999997mm" xlink:href="#_front-path"/>
     </clipPath>
@@ -14,8 +14,8 @@
     <g id="color_first" fill-rule="nonzero" fill="currentColor">
       <use href="#fabric-0"/>
       <use clip-path="url(#fabric-0-clip)" href="#fabric-image"/>
-      <g clip-path="url(#_front-clippath)" transform="translate(975.04 600.97)">
-        <svg id="placeholder_back" width="1151.71" height="1535.62" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1151.71 1535.62">
+      <g clip-path="url(#_front-clippath)" transform="translate(950.04 800.97)">
+        <svg id="placeholder_back" width="1200.71" height="1535.62" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200.71 1535.62">
           <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_front-path" stroke="#ffffff"/>
           <use stroke-width="3.4219062499999997mm" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#_front-path" stroke="#000000" stroke-dasharray="6.843812499999999mm, 6.843812499999999mm"/>
         </svg>
