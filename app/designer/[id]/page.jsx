@@ -12,8 +12,10 @@ const DesignerPage = () => {
   const { id } = useParams()
   const { products } = useAppContext()
   const [product, setProduct] = useState(null)
-  const [uploadedImage, setUploadedImage] = useState(null)
   const [activeView, setActiveView] = useState('front')
+
+  // State to hold design details for each view
+  const [designs, setDesigns] = useState({})
 
   useEffect(() => {
     if (products.length > 0) {
@@ -25,7 +27,25 @@ const DesignerPage = () => {
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
     if (file) {
-      setUploadedImage(URL.createObjectURL(file))
+      const newDesigns = {
+        ...designs,
+        [activeView]: {
+          image: URL.createObjectURL(file),
+          x: 0,
+          y: 0,
+          scale: 1,
+          rotation: 0,
+        },
+      }
+      setDesigns(newDesigns)
+    }
+  }
+
+  const updateDesign = (property, value) => {
+    if (designs[activeView]) {
+      const newDesigns = { ...designs }
+      newDesigns[activeView][property] += value
+      setDesigns(newDesigns)
     }
   }
 
@@ -36,6 +56,7 @@ const DesignerPage = () => {
   const availableViews = Object.keys(product.designTemplates || {}).filter(
     (key) => product.designTemplates[key]
   )
+  const currentDesign = designs[activeView]
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -83,10 +104,15 @@ const DesignerPage = () => {
                   alt={`${activeView} view`}
                   className='max-w-full max-h-full'
                 />
-                {uploadedImage && (
-                  <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 flex items-center justify-center'>
+                {currentDesign && (
+                  <div
+                    className='absolute top-1/2 left-1/2 w-1/2 h-1/2 flex items-center justify-center'
+                    style={{
+                      transform: `translate(${currentDesign.x}px, ${currentDesign.y}px) scale(${currentDesign.scale}) rotate(${currentDesign.rotation}deg)`,
+                    }}
+                  >
                     <img
-                      src={uploadedImage}
+                      src={currentDesign.image}
                       alt='Uploaded Design'
                       className='max-w-full max-h-full object-contain'
                     />
@@ -117,11 +143,78 @@ const DesignerPage = () => {
           </div>
         </section>
 
-        {/* Right Panel (for future use) */}
+        {/* Right Panel */}
         <aside className='w-full md:w-64 bg-white p-4 border-t md:border-l'>
           <h2 className='font-semibold'>{product.name}</h2>
           <p className='text-sm text-gray-500'>Custom Design</p>
-          {/* Add color swatches, etc. here later */}
+
+          {currentDesign && (
+            <div className='mt-4 space-y-4'>
+              <div>
+                <label className='text-sm font-medium'>Move</label>
+                <div className='grid grid-cols-2 gap-2 mt-1'>
+                  <button
+                    onClick={() => updateDesign('y', -5)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    Up
+                  </button>
+                  <button
+                    onClick={() => updateDesign('y', 5)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    Down
+                  </button>
+                  <button
+                    onClick={() => updateDesign('x', -5)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    Left
+                  </button>
+                  <button
+                    onClick={() => updateDesign('x', 5)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    Right
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className='text-sm font-medium'>Scale</label>
+                <div className='grid grid-cols-2 gap-2 mt-1'>
+                  <button
+                    onClick={() => updateDesign('scale', 0.1)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => updateDesign('scale', -0.1)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className='text-sm font-medium'>Rotate</label>
+                <div className='grid grid-cols-2 gap-2 mt-1'>
+                  <button
+                    onClick={() => updateDesign('rotation', 5)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    ⟳
+                  </button>
+                  <button
+                    onClick={() => updateDesign('rotation', -5)}
+                    className='p-2 bg-gray-200 rounded'
+                  >
+                    ⟲
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </aside>
       </main>
       <Footer />
