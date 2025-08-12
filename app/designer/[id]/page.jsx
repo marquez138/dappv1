@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Loading from '@/components/Loading'
 import Image from 'next/image'
+import InlineSVG from '@/components/InlineSVG' // Import the new component
 
 const DesignerPage = () => {
   const { id } = useParams()
@@ -102,23 +103,14 @@ const DesignerPage = () => {
           <div className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'>
             {templateSrc ? (
               <>
-                <div
+                <InlineSVG
+                  src={templateSrc}
+                  color={currentColor}
                   className='w-full h-full'
-                  style={{
-                    backgroundColor: currentColor,
-                    maskImage: `url(${templateSrc})`,
-                    maskSize: 'contain',
-                    maskPosition: 'center',
-                    maskRepeat: 'no-repeat',
-                    WebkitMaskImage: `url(${templateSrc})`,
-                    WebkitMaskSize: 'contain',
-                    WebkitMaskPosition: 'center',
-                    WebkitMaskRepeat: 'no-repeat',
-                  }}
-                ></div>
+                />
                 {currentDesign && (
                   <div
-                    className='absolute top-1/2 left-1/2 w-1/2 h-1/2'
+                    className='absolute top-1/2 left-1/2 w-1/2 h-1/2 flex items-center justify-center'
                     style={{
                       transform: `translate(-50%, -50%) translate(${currentDesign.x}px, ${currentDesign.y}px) scale(${currentDesign.scale}) rotate(${currentDesign.rotation}deg)`,
                     }}
