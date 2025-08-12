@@ -41,6 +41,7 @@ export async function POST(request) {
     const price = formData.get('price')
     const offerPrice = formData.get('offerPrice')
     const designTemplates = JSON.parse(formData.get('designTemplates'))
+    const availableColors = JSON.parse(formData.get('availableColors'))
 
     const files = formData.getAll('images')
     if (!files || files.length === 0) {
@@ -60,6 +61,7 @@ export async function POST(request) {
       offerPrice: Number(offerPrice),
       image,
       designTemplates,
+      availableColors, // Added this line
       date: Date.now(),
     })
 

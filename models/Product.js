@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   date: { type: Number, required: true },
   designTemplates: { type: Object, default: {} }, // Added this line
+  availableColors: { type: Array, default: [] }, // Added this line
 })
 
 const Product =

@@ -13,14 +13,16 @@ const DesignerPage = () => {
   const { products } = useAppContext()
   const [product, setProduct] = useState(null)
   const [activeView, setActiveView] = useState('front')
-
-  // State to hold design details for each view
   const [designs, setDesigns] = useState({})
+  const [currentColor, setCurrentColor] = useState(null)
 
   useEffect(() => {
     if (products.length > 0) {
       const currentProduct = products.find((p) => p._id === id)
       setProduct(currentProduct)
+      if (currentProduct && currentProduct.availableColors.length > 0) {
+        setCurrentColor(currentProduct.availableColors[0].hex)
+      }
     }
   }, [id, products])
 
@@ -57,6 +59,9 @@ const DesignerPage = () => {
     (key) => product.designTemplates[key]
   )
   const currentDesign = designs[activeView]
+  const templateSrc = product.designTemplates[activeView]
+    ? assets.designTemplates[product.designTemplates[activeView]].src
+    : ''
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -95,20 +100,27 @@ const DesignerPage = () => {
         {/* Main Designer Canvas */}
         <section className='flex-1 flex flex-col items-center justify-center p-4'>
           <div className='relative w-full max-w-lg h-auto aspect-square flex items-center justify-center'>
-            {product.designTemplates && product.designTemplates[activeView] ? (
+            {templateSrc ? (
               <>
-                <Image
-                  src={
-                    assets.designTemplates[product.designTemplates[activeView]]
-                  }
-                  alt={`${activeView} view`}
-                  className='max-w-full max-h-full'
-                />
+                <div
+                  className='w-full h-full'
+                  style={{
+                    backgroundColor: currentColor,
+                    maskImage: `url(${templateSrc})`,
+                    maskSize: 'contain',
+                    maskPosition: 'center',
+                    maskRepeat: 'no-repeat',
+                    WebkitMaskImage: `url(${templateSrc})`,
+                    WebkitMaskSize: 'contain',
+                    WebkitMaskPosition: 'center',
+                    WebkitMaskRepeat: 'no-repeat',
+                  }}
+                ></div>
                 {currentDesign && (
                   <div
-                    className='absolute top-1/2 left-1/2 w-1/2 h-1/2 flex items-center justify-center'
+                    className='absolute top-1/2 left-1/2 w-1/2 h-1/2'
                     style={{
-                      transform: `translate(${currentDesign.x}px, ${currentDesign.y}px) scale(${currentDesign.scale}) rotate(${currentDesign.rotation}deg)`,
+                      transform: `translate(-50%, -50%) translate(${currentDesign.x}px, ${currentDesign.y}px) scale(${currentDesign.scale}) rotate(${currentDesign.rotation}deg)`,
                     }}
                   >
                     <img
@@ -147,6 +159,32 @@ const DesignerPage = () => {
         <aside className='w-full md:w-64 bg-white p-4 border-t md:border-l'>
           <h2 className='font-semibold'>{product.name}</h2>
           <p className='text-sm text-gray-500'>Custom Design</p>
+
+          {/* Color Swatches */}
+          <div className='mt-4'>
+            <h3 className='text-sm font-medium'>
+              Color:{' '}
+              {
+                product.availableColors.find((c) => c.hex === currentColor)
+                  ?.name
+              }
+            </h3>
+            <div className='flex flex-wrap gap-2 mt-2'>
+              {product.availableColors.map((color) => (
+                <button
+                  key={color.name}
+                  onClick={() => setCurrentColor(color.hex)}
+                  className={`w-8 h-8 rounded-full cursor-pointer border-2 ${
+                    currentColor === color.hex
+                      ? 'border-orange-500'
+                      : 'border-gray-200'
+                  }`}
+                  style={{ backgroundColor: color.hex }}
+                  aria-label={color.name}
+                />
+              ))}
+            </div>
+          </div>
 
           {currentDesign && (
             <div className='mt-4 space-y-4'>

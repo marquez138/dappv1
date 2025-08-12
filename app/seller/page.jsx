@@ -6,6 +6,17 @@ import { useAppContext } from '@/context/AppContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
+const colorSwatch = [
+  { name: 'White', hex: '#FFFFFF' },
+  { name: 'Ash', hex: '#F3F4F6' },
+  { name: 'Silver', hex: '#E5E7EB' },
+  { name: 'Dark Grey', hex: '#4B5563' },
+  { name: 'Black', hex: '#1F2937' },
+  { name: 'Red', hex: '#EF4444' },
+  { name: 'Mauve', hex: '#D1D5DB' },
+  { name: 'Brown', hex: '#7C3AED' },
+]
+
 const AddProduct = () => {
   const { getToken } = useAppContext()
 
@@ -21,9 +32,18 @@ const AddProduct = () => {
     sleeveRight: '',
     sleeveLeft: '',
   })
+  const [selectedColors, setSelectedColors] = useState([])
 
   const handleTemplateChange = (e, key) => {
     setDesignTemplates((prev) => ({ ...prev, [key]: e.target.value }))
+  }
+
+  const handleColorSelect = (color) => {
+    setSelectedColors((prev) =>
+      prev.some((c) => c.name === color.name)
+        ? prev.filter((c) => c.name !== color.name)
+        : [...prev, color]
+    )
   }
 
   const handleSubmit = async (e) => {
@@ -36,6 +56,8 @@ const AddProduct = () => {
     formData.append('category', category)
     formData.append('price', price)
     formData.append('offerPrice', offerPrice)
+    formData.append('designTemplates', JSON.stringify(designTemplates))
+    formData.append('availableColors', JSON.stringify(selectedColors))
 
     for (let i = 0; i < files.length; i++) {
       formData.append('images', files[i])
@@ -264,6 +286,25 @@ const AddProduct = () => {
               value={offerPrice}
               required
             />
+          </div>
+        </div>
+
+        {/* Color Swatch Section */}
+        <div>
+          <p className='text-base font-medium'>Available Colors</p>
+          <div className='flex flex-wrap gap-2 mt-2'>
+            {colorSwatch.map((color) => (
+              <div
+                key={color.name}
+                onClick={() => handleColorSelect(color)}
+                className={`w-8 h-8 rounded-full cursor-pointer border-2 ${
+                  selectedColors.some((c) => c.name === color.name)
+                    ? 'border-orange-500'
+                    : 'border-transparent'
+                }`}
+                style={{ backgroundColor: color.hex }}
+              ></div>
+            ))}
           </div>
         </div>
 
