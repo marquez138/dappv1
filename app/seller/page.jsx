@@ -1,177 +1,257 @@
 'use client'
-import React, { useState } from "react";
-import { assets } from "@/assets/assets";
-import Image from "next/image";
-import { useAppContext } from "@/context/AppContext";
-import axios from "axios";
-import toast from "react-hot-toast";
+import React, { useState } from 'react'
+import { assets } from '@/assets/assets'
+import Image from 'next/image'
+import { useAppContext } from '@/context/AppContext'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const AddProduct = () => {
-
   const { getToken } = useAppContext()
 
-  const [files, setFiles] = useState([]);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Earphone');
-  const [price, setPrice] = useState('');
-  const [offerPrice, setOfferPrice] = useState('');
+  const [files, setFiles] = useState([])
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [category, setCategory] = useState('Earphone')
+  const [price, setPrice] = useState('')
+  const [offerPrice, setOfferPrice] = useState('')
+  const [designTemplates, setDesignTemplates] = useState({})
+
+  const handleTemplateChange = (e, key) => {
+    setDesignTemplates((prev) => ({ ...prev, [key]: e.target.files[0] }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const formData = new FormData()
 
-    formData.append('name',name)
-    formData.append('description',description)
-    formData.append('category',category)
-    formData.append('price',price)
-    formData.append('offerPrice',offerPrice)
+    formData.append('name', name)
+    formData.append('description', description)
+    formData.append('category', category)
+    formData.append('price', price)
+    formData.append('offerPrice', offerPrice)
 
     for (let i = 0; i < files.length; i++) {
-      formData.append('images',files[i])
+      formData.append('images', files[i])
+    }
+
+    for (const key in designTemplates) {
+      if (designTemplates[key]) {
+        formData.append(key, designTemplates[key])
+      }
     }
 
     try {
-
       const token = await getToken()
 
-      const { data } = await axios.post('/api/product/add',formData,{headers:{Authorization:`Bearer ${token}`}})
+      const { data } = await axios.post('/api/product/add', formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
 
       if (data.success) {
         toast.success(data.message)
-        setFiles([]);
-        setName('');
-        setDescription('');
-        setCategory('Earphone');
-        setPrice('');
-        setOfferPrice('');
+        setFiles([])
+        setName('')
+        setDescription('')
+        setCategory('Earphone')
+        setPrice('')
+        setOfferPrice('')
+        setDesignTemplates({})
+        // Reset file inputs visually
+        document.getElementById('product-form').reset()
       } else {
-        toast.error(data.message);
+        toast.error(data.message)
       }
-
-      
     } catch (error) {
       toast.error(error.message)
     }
-
-
-  };
+  }
 
   return (
-    <div className="flex-1 min-h-screen flex flex-col justify-between">
-      <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 max-w-lg">
+    <div className='flex-1 min-h-screen flex flex-col justify-between'>
+      <form
+        id='product-form'
+        onSubmit={handleSubmit}
+        className='md:p-10 p-4 space-y-5 max-w-lg'
+      >
         <div>
-          <p className="text-base font-medium">Product Image</p>
-          <div className="flex flex-wrap items-center gap-3 mt-2">
-
+          <p className='text-base font-medium'>Product Image</p>
+          <div className='flex flex-wrap items-center gap-3 mt-2'>
             {[...Array(4)].map((_, index) => (
               <label key={index} htmlFor={`image${index}`}>
-                <input onChange={(e) => {
-                  const updatedFiles = [...files];
-                  updatedFiles[index] = e.target.files[0];
-                  setFiles(updatedFiles);
-                }} type="file" id={`image${index}`} hidden />
+                <input
+                  onChange={(e) => {
+                    const updatedFiles = [...files]
+                    updatedFiles[index] = e.target.files[0]
+                    setFiles(updatedFiles)
+                  }}
+                  type='file'
+                  id={`image${index}`}
+                  hidden
+                />
                 <Image
                   key={index}
-                  className="max-w-24 cursor-pointer"
-                  src={files[index] ? URL.createObjectURL(files[index]) : assets.upload_area}
-                  alt=""
+                  className='max-w-24 cursor-pointer'
+                  src={
+                    files[index]
+                      ? URL.createObjectURL(files[index])
+                      : assets.upload_area
+                  }
+                  alt=''
                   width={100}
                   height={100}
                 />
               </label>
             ))}
-
           </div>
         </div>
-        <div className="flex flex-col gap-1 max-w-md">
-          <label className="text-base font-medium" htmlFor="product-name">
+
+        {/* Design Templates Section */}
+        <div>
+          <p className='text-base font-medium'>Design Templates (SVG only)</p>
+          <div className='grid grid-cols-2 gap-4 mt-2'>
+            <div>
+              <label htmlFor='front-template' className='text-sm'>
+                Front Side
+              </label>
+              <input
+                type='file'
+                id='front-template'
+                accept='.svg'
+                onChange={(e) => handleTemplateChange(e, 'front')}
+                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
+              />
+            </div>
+            <div>
+              <label htmlFor='back-template' className='text-sm'>
+                Back Side
+              </label>
+              <input
+                type='file'
+                id='back-template'
+                accept='.svg'
+                onChange={(e) => handleTemplateChange(e, 'back')}
+                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
+              />
+            </div>
+            <div>
+              <label htmlFor='sleeveRight-template' className='text-sm'>
+                Sleeve Right
+              </label>
+              <input
+                type='file'
+                id='sleeveRight-template'
+                accept='.svg'
+                onChange={(e) => handleTemplateChange(e, 'sleeveRight')}
+                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
+              />
+            </div>
+            <div>
+              <label htmlFor='sleeveLeft-template' className='text-sm'>
+                Sleeve Left
+              </label>
+              <input
+                type='file'
+                id='sleeveLeft-template'
+                accept='.svg'
+                onChange={(e) => handleTemplateChange(e, 'sleeveLeft')}
+                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className='flex flex-col gap-1 max-w-md'>
+          <label className='text-base font-medium' htmlFor='product-name'>
             Product Name
           </label>
           <input
-            id="product-name"
-            type="text"
-            placeholder="Type here"
-            className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+            id='product-name'
+            type='text'
+            placeholder='Type here'
+            className='outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40'
             onChange={(e) => setName(e.target.value)}
             value={name}
             required
           />
         </div>
-        <div className="flex flex-col gap-1 max-w-md">
+        <div className='flex flex-col gap-1 max-w-md'>
           <label
-            className="text-base font-medium"
-            htmlFor="product-description"
+            className='text-base font-medium'
+            htmlFor='product-description'
           >
             Product Description
           </label>
           <textarea
-            id="product-description"
+            id='product-description'
             rows={4}
-            className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none"
-            placeholder="Type here"
+            className='outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none'
+            placeholder='Type here'
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             required
           ></textarea>
         </div>
-        <div className="flex items-center gap-5 flex-wrap">
-          <div className="flex flex-col gap-1 w-32">
-            <label className="text-base font-medium" htmlFor="category">
+        <div className='flex items-center gap-5 flex-wrap'>
+          <div className='flex flex-col gap-1 w-32'>
+            <label className='text-base font-medium' htmlFor='category'>
               Category
             </label>
             <select
-              id="category"
-              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              id='category'
+              className='outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40'
               onChange={(e) => setCategory(e.target.value)}
               defaultValue={category}
             >
-              <option value="Earphone">Earphone</option>
-              <option value="Headphone">Headphone</option>
-              <option value="Watch">Watch</option>
-              <option value="Smartphone">Smartphone</option>
-              <option value="Laptop">Laptop</option>
-              <option value="Camera">Camera</option>
-              <option value="Accessories">Accessories</option>
+              <option value='Earphone'>Earphone</option>
+              <option value='Headphone'>Headphone</option>
+              <option value='Watch'>Watch</option>
+              <option value='Smartphone'>Smartphone</option>
+              <option value='Laptop'>Laptop</option>
+              <option value='Camera'>Camera</option>
+              <option value='Accessories'>Accessories</option>
             </select>
           </div>
-          <div className="flex flex-col gap-1 w-32">
-            <label className="text-base font-medium" htmlFor="product-price">
+          <div className='flex flex-col gap-1 w-32'>
+            <label className='text-base font-medium' htmlFor='product-price'>
               Product Price
             </label>
             <input
-              id="product-price"
-              type="number"
-              placeholder="0"
-              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              id='product-price'
+              type='number'
+              placeholder='0'
+              className='outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40'
               onChange={(e) => setPrice(e.target.value)}
               value={price}
               required
             />
           </div>
-          <div className="flex flex-col gap-1 w-32">
-            <label className="text-base font-medium" htmlFor="offer-price">
+          <div className='flex flex-col gap-1 w-32'>
+            <label className='text-base font-medium' htmlFor='offer-price'>
               Offer Price
             </label>
             <input
-              id="offer-price"
-              type="number"
-              placeholder="0"
-              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              id='offer-price'
+              type='number'
+              placeholder='0'
+              className='outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40'
               onChange={(e) => setOfferPrice(e.target.value)}
               value={offerPrice}
               required
             />
           </div>
         </div>
-        <button type="submit" className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded">
+        <button
+          type='submit'
+          className='px-8 py-2.5 bg-orange-600 text-white font-medium rounded'
+        >
           ADD
         </button>
       </form>
       {/* <Footer /> */}
     </div>
-  );
-};
+  )
+}
 
-export default AddProduct;
+export default AddProduct
